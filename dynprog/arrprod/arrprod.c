@@ -4,7 +4,7 @@
 #include <math.h>
 #include <string.h>
 
-#define NUM_ELEMENTS 4 
+#define NUM_ELEMENTS 10 
 
 int main(int argc, char *argv[])
 {
