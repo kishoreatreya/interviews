@@ -55,17 +55,17 @@ node* reverse(node* list)
 	// This function will reverse a singly linked list
 	node* head = list;
 	node* cur = head->next;
-	node* tmp = NULL;
+	node* last = head;
 	
-	while(head->next != NULL)
+	while(last->next != NULL)
 	{
-		tmp = cur->next;
-		cur->next = head;
-		head->next = tmp;
-		cur = tmp;
+	    last->next = cur->next;
+	    cur->next = head;
+	    head = cur;
+	    cur = last->next;
 	}
 	
-	return cur;
+	return head;
 }
 
 int main (int argc, char* argv[])
@@ -73,7 +73,7 @@ int main (int argc, char* argv[])
 	node* l0 = NULL;
 	node* rl0 = NULL;
 	
-	l0 = buildListMult(4, 4);
+	l0 = buildListMult(4, 20);
 	printf("forward: \n\n");
 	printList(l0);
 
