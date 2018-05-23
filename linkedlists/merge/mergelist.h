@@ -9,7 +9,7 @@
  */
 typedef struct _node 
 {
-	uint32_t data;
-	struct _node *next;
+    uint32_t data;
+    struct _node *next;
 } node;
 
