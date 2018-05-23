@@ -82,4 +82,5 @@ int main (int argc, char* argv[])
 	printf("reverse: \n\n");
 	printList(rl0);
 
+    destroyList(rl0);
 }
