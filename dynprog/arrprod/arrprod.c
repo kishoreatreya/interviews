@@ -44,6 +44,11 @@ int main(int argc, char *argv[])
         array[i] = lparr[i] * rparr[i];
         printf("array[%d] = %d; lparr[%d] = %d, rparr[%d] = %d\n", i, array[i], i, lparr[i], i, rparr[i]);
     }
+
+    free(array);
+    free(lparr);
+    free(rparr);
+
     return 0;
 }
 
