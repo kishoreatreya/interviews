@@ -52,41 +52,79 @@ void merge(int **arr, int leftIdx, int mid, int rightIdx)
 
     for(int i = 0; i < lsize; i++)
     {
-        ltmp[i] = *arr[leftIdx + i];
+        ltmp[i] = (*arr)[leftIdx + i];
     }
     for(int i = 0; i < rsize; i++)
     {
-        rtmp[i] = *arr[mid + i];
+        rtmp[i] = (*arr)[mid + 1 + i];
     }
 
-    printArr(rtmp, rsize);
-    printArr(ltmp, lsize);
+    int lIter = 0, rIter = 0;
+    int arrIter = 0;
+    while(lIter != lsize && rIter != rsize)
+    {
+        if(ltmp[lIter] < rtmp[rIter])
+        {
+            (*arr)[leftIdx + arrIter] = ltmp[lIter];
+            lIter++;
+        }
+        else
+        {
+            (*arr)[leftIdx + arrIter] = rtmp[rIter];
+            rIter++;
+        }
+        arrIter++;
+    }
+
+    // fill remaining left
+    if(lIter < lsize)
+    {
+        for(int i = lIter; i < lsize; i++)
+        {
+            (*arr)[leftIdx + arrIter] = ltmp[i];
+            arrIter++;
+        }
+    }
+    else if(rIter < rsize)
+    {
+        for(int i = rIter; i < rsize; i++)
+        {
+            (*arr)[leftIdx + arrIter] = rtmp[i];
+            arrIter++;
+        }
+    }
+
+    delete [] ltmp;
+    delete [] rtmp;
 }
 
 void sort(int *arr, int leftIdx, int rightIdx)
 {
-    merge(&arr, leftIdx, (rightIdx + leftIdx)/2, rightIdx);
-
-    /*
-    int mid
+    int mid = (rightIdx + leftIdx) / 2;
 
     // Check if leftIdx >= rightIdx
     if(leftIdx >= rightIdx)
     {
-        return 
+        return;
     }
     else
     {
-        sort
-    }*/
+        // sort left
+        sort(arr, leftIdx, mid);
+        // sort right
+        sort(arr, mid+1, rightIdx);
+        merge(&arr, leftIdx, mid, rightIdx);
+    }
 }
 
 int main(void)
 {
     int * arr = buildUnsortUniq(10);
+
     printArr(arr, 10);
 
     sort(arr, 0, 9);
+    std::cout << "sort" << std::endl;
     printArr(arr, 10);
     
 
