@@ -50,6 +50,7 @@ void merge(int **arr, int leftIdx, int mid, int rightIdx)
     int *ltmp = new int[lsize];
     int *rtmp = new int[rsize];
 
+    // left is inclusive of mid
     for(int i = 0; i < lsize; i++)
     {
         ltmp[i] = (*arr)[leftIdx + i];
