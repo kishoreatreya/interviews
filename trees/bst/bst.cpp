@@ -68,6 +68,18 @@ void deleteNode(bst** tree, int val)
         // case 1: no children
         if(node->left == NULL && node->right == NULL)
         {
+            if(node == node->parent->left)
+            {
+                std::cout << "left" << std::endl;
+                node->parent->left = NULL;
+                node->parent = NULL;
+            }
+            else
+            {
+                std::cout << "right" << std::endl;
+                node->parent->right = NULL;
+                node->parent = NULL;
+            }
             delete node;
             return;
         }
@@ -89,6 +101,7 @@ void deleteNode(bst** tree, int val)
                 node->parent->right = (node->left != NULL ? node->left : node->right);
                 delete node;
             }
+            return;
         }
         
         // case 3: 2 children
@@ -96,9 +109,11 @@ void deleteNode(bst** tree, int val)
         {
             // find the left most leaf of the right subtree and promote to child of grand parent
             bst* tmp = node->right;
+            int count = 0;
             while(tmp->left != NULL)
             {
                 tmp = tmp->left;
+                count++;
             }
 
             // tmp is the left most leaf of the right subtree
@@ -106,23 +121,30 @@ void deleteNode(bst** tree, int val)
             if(node == node->parent->left)
             {
                 // tmp must replace this position, so it's to become the left child of the grandparent
-                tmp->parent->left = NULL;
+                if(count)
+                {
+                    tmp->parent->left = NULL;
+                    tmp->right = node->right;
+                }
                 tmp->parent = node->parent;
                 tmp->parent->left = tmp;
-                tmp->right = node->right;
                 tmp->left = node->left;
                 delete node;
             }
             else
             {
                 // tmp must replace this position, so it's to become the left child of the grandparent
-                tmp->parent->left = NULL;
+                if(count)
+                {
+                    tmp->parent->left = NULL;
+                    tmp->right = node->right;
+                }
                 tmp->parent = node->parent;
                 tmp->parent->right = tmp;
-                tmp->right = node->right;
                 tmp->left = node->left;
                 delete node;
             }
+            return;
         }
     }
 }
@@ -139,11 +161,11 @@ void printTree(bst* tree)
     {
         node = bfq.front();
         std::cout << node->val << " " << std::endl;
-        if(node->left)
+        if(node->left != NULL)
         {
             bfq.push(node->left);
         }
-        if(node->right)
+        if(node->right != NULL)
         {
             bfq.push(node->right);
         }
@@ -154,11 +176,11 @@ void printTree(bst* tree)
 
 int main(void)
 {
-    int arr[5] = {4, 2, 5, 1, 3};
+    int arr[11] = {4, 2, 8, 1, 3, 6, 5, 10, 7, 12, 9};
 
     bst *tree = NULL;
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 11; i++)
     {
         insertNode(&tree, arr[i], NULL);
     }
@@ -186,7 +208,7 @@ int main(void)
         std::cout << "node '" << 20 << "' not found! " << search << std::endl;
     }
 
-    deleteNode(&tree, 3);
+    deleteNode(&tree, 8);
     printTree(tree);
     
     return 0;
