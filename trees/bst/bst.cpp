@@ -109,7 +109,7 @@ void deleteNode(bst** tree, int val)
         {
             // find the left most leaf of the right subtree and promote to child of grand parent
             bst* tmp = node->right;
-            int count = 0;
+            int count = 0;  // count the distance between the left most leaf of the right subtree and the node's parent
             while(tmp->left != NULL)
             {
                 tmp = tmp->left;
