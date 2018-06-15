@@ -20,6 +20,12 @@ void insertNode(bst** tree, int val, bst* parent)
         return;
     }
 
+    if(val == (*tree)->val)
+    {
+        // node already inserted
+        return;
+    }
+
     // tree passed in, determine where to place node
     if(val < (*tree)->val)
     {
