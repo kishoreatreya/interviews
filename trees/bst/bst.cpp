@@ -123,6 +123,19 @@ void deleteNode(bst** tree, int val)
                 // tmp must replace this position, so it's to become the left child of the grandparent
                 if(count)
                 {
+                    // if the left most child of the right subtree is more than one level away from
+                    // the node to be deleted's parent we need to update the left most child's current
+                    // immediate parent's left child pointer to NULL and move the left most child's right
+                    // pointer to the node to be deleted's right pointer
+                    // 
+                    //                  a
+                    //              b        c
+                    //          d      e         f
+                    //
+                    // if we're deleting c, f is the left most child of the right subtree and it's only
+                    // one level away from the nodes parent, so this case we don't need to update f's
+                    // right pointer and it's parent's left pointer, as it's parent is the node to be
+                    // deleted
                     tmp->parent->left = NULL;
                     tmp->right = node->right;
                 }
@@ -136,6 +149,19 @@ void deleteNode(bst** tree, int val)
                 // tmp must replace this position, so it's to become the left child of the grandparent
                 if(count)
                 {
+                    // if the left most child of the right subtree is more than one level away from
+                    // the node to be deleted's parent we need to update the left most child's current
+                    // immediate parent's left child pointer to NULL and move the left most child's right
+                    // pointer to the node to be deleted's right pointer
+                    // 
+                    //                  a
+                    //              b        c
+                    //          d      e         f
+                    //
+                    // if we're deleting c, f is the left most child of the right subtree and it's only
+                    // one level away from the nodes parent, so this case we don't need to update f's
+                    // right pointer and it's parent's left pointer, as it's parent is the node to be
+                    // deleted
                     tmp->parent->left = NULL;
                     tmp->right = node->right;
                 }
