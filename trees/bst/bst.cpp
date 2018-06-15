@@ -205,6 +205,29 @@ void printTree(bst* tree)
     }
 }
 
+// destroy tree using bfs traversal
+void destroyTree(bst* tree)
+{
+    std::queue<bst*> bfq;
+
+    bfq.push(tree);
+    bst *node = tree;
+
+    while(!bfq.empty())
+    {
+        node = bfq.front();
+        if(node->left != NULL)
+        {
+            bfq.push(node->left);
+        }
+        if(node->right != NULL)
+        {
+            bfq.push(node->right);
+        }
+        bfq.pop();
+        delete node;
+    }
+}
 
 int main(void)
 {
@@ -242,7 +265,9 @@ int main(void)
 
     deleteNode(&tree, 8);
     printTree(tree);
-    
+
+    destroyTree(tree);
+
     return 0;
 }
 
