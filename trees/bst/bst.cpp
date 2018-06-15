@@ -80,13 +80,13 @@ void deleteNode(bst** tree, int val)
             if(node == node->parent->left)
             {
                 // make child the left child of grand parent
-                node->parent->left = node->left;
+                node->parent->left = (node->left != NULL ? node->left : node->right);
                 delete node;
             }
             else
             {
                 // make child the right child of grand parent
-                node->parent->right = node->left;
+                node->parent->right = (node->left != NULL ? node->left : node->right);
                 delete node;
             }
         }
@@ -105,14 +105,20 @@ void deleteNode(bst** tree, int val)
             // determine if current node is a left or right child of its parent
             if(node == node->parent->left)
             {
-                node->parent->left = tmp;
+                // tmp must replace this position, so it's to become the left child of the grandparent
+                tmp->parent->left = NULL;
+                tmp->parent = node->parent;
+                tmp->parent->left = tmp;
                 tmp->right = node->right;
                 tmp->left = node->left;
                 delete node;
             }
             else
             {
-                node->parent->right = tmp;
+                // tmp must replace this position, so it's to become the left child of the grandparent
+                tmp->parent->left = NULL;
+                tmp->parent = node->parent;
+                tmp->parent->right = tmp;
                 tmp->right = node->right;
                 tmp->left = node->left;
                 delete node;
@@ -131,6 +137,7 @@ void printTree(bst* tree)
 
     while(!bfq.empty())
     {
+        node = bfq.front();
         std::cout << node->val << " " << std::endl;
         if(node->left)
         {
@@ -140,7 +147,6 @@ void printTree(bst* tree)
         {
             bfq.push(node->right);
         }
-        node = bfq.front();
         bfq.pop();
     }
 }
@@ -157,6 +163,7 @@ int main(void)
         insertNode(&tree, arr[i], NULL);
     }
 
+    std::cout << "print tree: " << std::endl;
     printTree(tree);
 
     bst *search = searchNode(tree, 4);
@@ -184,4 +191,5 @@ int main(void)
     
     return 0;
 }
+
 
